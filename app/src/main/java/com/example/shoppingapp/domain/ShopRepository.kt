@@ -1,5 +1,7 @@
 package com.example.shoppingapp.domain
 
+import androidx.lifecycle.LiveData
+
 interface ShopRepository {
 
     fun addShopItem(shopItem: ShopItem)
@@ -10,5 +12,5 @@ interface ShopRepository {
 
     fun getShopItem(id: Int): ShopItem
 
-    fun getShopItems(): List<ShopItem>
+    fun getShopItems(): LiveData<List<ShopItem>>
 }
