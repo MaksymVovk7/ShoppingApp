@@ -20,6 +20,7 @@ class ShopItemsAdapter : RecyclerView.Adapter<ShopItemsAdapter.ShopItemsViewHold
     companion object {
         const val VIEW_TYPE_ENABLED = 0
         const val VIEW_TYPE_DISABLED = 1
+        const val MAX_POOL_SIZE = 10
     }
 
     class ShopItemsViewHolder(view: View) : ViewHolder(view) {
