@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.R
 
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         shopViewModel = ViewModelProvider(this)[MainShopViewModel::class.java]
         shopViewModel.shopListLiveData.observe(this) {
             shopItemsAdapter.shopItemList = it
-            shopItemsAdapter.notifyDataSetChanged()
         }
     }
 
@@ -38,12 +38,45 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        setUpLongClickListener()
+        setUpClickListener()
+        setUpSwipeListener(recyclerView)
+    }
+
+    private fun setUpSwipeListener(recyclerView: RecyclerView) {
+        val callback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val item = shopItemsAdapter.shopItemList[viewHolder.adapterPosition]
+                shopViewModel.deleteShopItem(item)
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun setUpClickListener() {
+        shopItemsAdapter.onShopItemClickListener = {
+            Toast.makeText(this, "Clicked $it", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setUpLongClickListener() {
         shopItemsAdapter.onShopItemLongClickListener = {
             shopViewModel.changeStateShopItem(it)
             Toast.makeText(this, "LongClicked $it", Toast.LENGTH_SHORT).show()
-        }
-        shopItemsAdapter.onShopItemClickListener = {
-            Toast.makeText(this, "Clicked $it", Toast.LENGTH_SHORT).show()
         }
     }
 }

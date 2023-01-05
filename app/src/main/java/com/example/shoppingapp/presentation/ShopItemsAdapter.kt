@@ -32,25 +32,8 @@ class ShopItemsAdapter : RecyclerView.Adapter<ShopItemsAdapter.ShopItemsViewHold
 
     }
 
-    /*private fun setUpLayout(parent: ViewGroup, layout: Int) : View {
-        return LayoutInflater.from(parent.context).inflate(layout, parent, false)
-    }*/
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemsViewHolder {
 
-        /*val view = when(viewType){
-            VIEW_TYPE_ENABLED -> LayoutInflater.from(parent.context).inflate(
-                R.layout.item_shop_enabled,
-                parent,
-                false
-            )
-            VIEW_TYPE_DISABLED -> LayoutInflater.from(parent.context).inflate(
-                R.layout.item_shop_disabled,
-                parent,
-                false
-            )
-            else -> throw RuntimeException("Unknown viewType : $viewType")
-        }*/
         val layout = when(viewType) {
             VIEW_TYPE_ENABLED -> R.layout.item_shop_enabled
             VIEW_TYPE_DISABLED -> R.layout.item_shop_disabled
