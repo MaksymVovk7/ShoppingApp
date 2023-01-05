@@ -1,6 +1,7 @@
 package com.example.shoppingapp.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -18,13 +19,14 @@ class MainActivity : AppCompatActivity() {
         shopViewModel = ViewModelProvider(this)[MainShopViewModel::class.java]
         shopViewModel.shopListLiveData.observe(this) {
             shopItemsAdapter.shopItemList = it
+            shopItemsAdapter.notifyDataSetChanged()
         }
     }
 
     private fun setUpRecyclerView() {
-        shopItemsAdapter = ShopItemsAdapter()
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewShopList)
         with(recyclerView) {
+            shopItemsAdapter = ShopItemsAdapter()
             adapter = shopItemsAdapter
             recycledViewPool.setMaxRecycledViews(
                 ShopItemsAdapter.VIEW_TYPE_ENABLED,
@@ -36,5 +38,12 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        shopItemsAdapter.onShopItemLongClickListener = {
+            shopViewModel.changeStateShopItem(it)
+            Toast.makeText(this, "LongClicked $it", Toast.LENGTH_SHORT).show()
+        }
+        shopItemsAdapter.onShopItemClickListener = {
+            Toast.makeText(this, "Clicked $it", Toast.LENGTH_SHORT).show()
+        }
     }
 }

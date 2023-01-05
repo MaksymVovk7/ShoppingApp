@@ -17,13 +17,16 @@ class ShopItemsAdapter : RecyclerView.Adapter<ShopItemsAdapter.ShopItemsViewHold
             notifyDataSetChanged()
         }
 
+    var onShopItemLongClickListener : ((ShopItem) -> Unit)? = null
+    var onShopItemClickListener : ((ShopItem) -> Unit)? = null
+
     companion object {
-        const val VIEW_TYPE_ENABLED = 0
-        const val VIEW_TYPE_DISABLED = 1
+        const val VIEW_TYPE_ENABLED = 100
+        const val VIEW_TYPE_DISABLED = 101
         const val MAX_POOL_SIZE = 10
     }
 
-    class ShopItemsViewHolder(view: View) : ViewHolder(view) {
+    class ShopItemsViewHolder(val view: View) : ViewHolder(view) {
         val textViewName = view.findViewById<TextView>(R.id.textViewName)
         val textViewCount = view.findViewById<TextView>(R.id.textViewCount)
 
@@ -35,7 +38,7 @@ class ShopItemsAdapter : RecyclerView.Adapter<ShopItemsAdapter.ShopItemsViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShopItemsViewHolder {
 
-        val view = when(viewType){
+        /*val view = when(viewType){
             VIEW_TYPE_ENABLED -> LayoutInflater.from(parent.context).inflate(
                 R.layout.item_shop_enabled,
                 parent,
@@ -47,12 +50,29 @@ class ShopItemsAdapter : RecyclerView.Adapter<ShopItemsAdapter.ShopItemsViewHold
                 false
             )
             else -> throw RuntimeException("Unknown viewType : $viewType")
+        }*/
+        val layout = when(viewType) {
+            VIEW_TYPE_ENABLED -> R.layout.item_shop_enabled
+            VIEW_TYPE_DISABLED -> R.layout.item_shop_disabled
+            else -> throw RuntimeException("Unknown viewType : $viewType")
         }
+        val view = LayoutInflater.from(parent.context).inflate(
+            layout,
+            parent,
+            false
+        )
         return ShopItemsViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ShopItemsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ShopItemsAdapter.ShopItemsViewHolder, position: Int) {
         val item = shopItemList[position]
+        holder.view.setOnLongClickListener {
+            onShopItemLongClickListener?.invoke(item)
+            true
+        }
+        holder.view.setOnClickListener {
+            onShopItemClickListener?.invoke(item)
+        }
         holder.textViewName.text = item.name
         holder.textViewCount.text = item.count.toString()
     }
