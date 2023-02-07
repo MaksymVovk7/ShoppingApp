@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,12 @@ class MainActivity : AppCompatActivity() {
         shopViewModel = ViewModelProvider(this)[MainShopViewModel::class.java]
         shopViewModel.shopListLiveData.observe(this) {
             shopItemsAdapter.submitList(it)
+        }
+
+        val buttonAddShopItem = findViewById<FloatingActionButton>(R.id.buttonAddShopItem)
+        buttonAddShopItem.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
         }
     }
 
