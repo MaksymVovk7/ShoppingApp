@@ -3,6 +3,7 @@ package com.example.shoppingapp.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppingapp.R
 
@@ -10,6 +11,8 @@ class ShopItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
+        val mode = intent.getStringExtra(EXTRA_SCREEN_MODE)
+        Log.d("ShopItemActivity", mode.toString())
     }
 
     companion object {
@@ -21,6 +24,13 @@ class ShopItemActivity : AppCompatActivity() {
         fun newIntentAddItem(context: Context): Intent {
             val intent = Intent(context, ShopItemActivity::class.java)
             intent.putExtra(EXTRA_SCREEN_MODE, MODE_ADD)
+            return intent
+        }
+
+        fun newIntentEditItem(context: Context, shopItemId: Int): Intent {
+            val intent = Intent(context, ShopItemActivity::class.java)
+            intent.putExtra(EXTRA_SCREEN_MODE, MODE_EDIT)
+            intent.putExtra(EXTRA_SHOP_ITEM_ID, shopItemId)
             return intent
         }
     }

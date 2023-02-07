@@ -76,7 +76,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpClickListener() {
         shopItemsAdapter.onShopItemClickListener = {
-            Toast.makeText(this, "Clicked $it", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Clicked $it", Toast.LENGTH_SHORT).show()
+            val intent = ShopItemActivity.newIntentEditItem(this, it.id)
+            startActivity(intent)
         }
     }
 
