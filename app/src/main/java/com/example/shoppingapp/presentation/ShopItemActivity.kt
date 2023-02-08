@@ -3,19 +3,12 @@ package com.example.shoppingapp.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.shoppingapp.R
-import com.example.shoppingapp.domain.ShopItem
-import com.google.android.material.textfield.TextInputLayout
 
 class ShopItemActivity : AppCompatActivity() {
 
-    private lateinit var shopItemViewModel: ShopItemViewModel
+    /*private lateinit var shopItemViewModel: ShopItemViewModel
 
     private lateinit var textInputName: TextInputLayout
     private lateinit var textInputCount: TextInputLayout
@@ -24,20 +17,20 @@ class ShopItemActivity : AppCompatActivity() {
     private lateinit var buttonSave: Button
 
     private var screenMode = MODE_UNKNOWN
-    private var shopItemId = ShopItem.UNDEFINED_ID
+    private var shopItemId = ShopItem.UNDEFINED_ID*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
-        parseIntent()
+        /*parseIntent()
         shopItemViewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews()
         addChangeTextListener()
         showLaunchMode()
-        setUpObserversViewModel()
+        setUpObserversViewModel()*/
     }
 
-    private fun addChangeTextListener() {
+    /*private fun addChangeTextListener() {
 
         editTextName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
@@ -133,7 +126,7 @@ class ShopItemActivity : AppCompatActivity() {
         editTextName = findViewById(R.id.editTextName)
         editTextCount = findViewById(R.id.editTextCount)
         buttonSave = findViewById(R.id.buttonSave)
-    }
+    }*/
 
     companion object {
         private const val EXTRA_SCREEN_MODE = "extra_mode"
