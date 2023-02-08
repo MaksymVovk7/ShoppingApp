@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.shoppingapp.R
+import com.example.shoppingapp.domain.ShopItem
 
 class ShopItemActivity : AppCompatActivity() {
 
@@ -14,16 +15,16 @@ class ShopItemActivity : AppCompatActivity() {
     private lateinit var textInputCount: TextInputLayout
     private lateinit var editTextName: EditText
     private lateinit var editTextCount: EditText
-    private lateinit var buttonSave: Button
+    private lateinit var buttonSave: Button*/
 
     private var screenMode = MODE_UNKNOWN
-    private var shopItemId = ShopItem.UNDEFINED_ID*/
+    private var shopItemId = ShopItem.UNDEFINED_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_item)
-        /*parseIntent()
-        shopItemViewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
+        parseIntent()
+        /*shopItemViewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews()
         addChangeTextListener()
         showLaunchMode()
@@ -53,16 +54,21 @@ class ShopItemActivity : AppCompatActivity() {
             override fun afterTextChanged(p0: Editable?) { }
 
         })
-    }
+    }*/
 
     private fun showLaunchMode() {
-        when(screenMode) {
-            MODE_ADD -> launchAddMode()
-            MODE_EDIT -> launchEditMode()
+        val fragment = when (screenMode) {
+            MODE_ADD -> ShopItemFragment.newInstanceAddItem()
+            MODE_EDIT -> ShopItemFragment.newInstanceEditItem(shopItemId)
+            else -> throw RuntimeException("Unknown screen mode $screenMode")
         }
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.shop_item_container, fragment)
+            .commit()
     }
 
-    private fun launchAddMode() {
+    /*private fun launchAddMode() {
         buttonSave.setOnClickListener {
             shopItemViewModel.addShopItem(editTextName.text.toString(), editTextCount.text.toString())
         }
@@ -77,9 +83,9 @@ class ShopItemActivity : AppCompatActivity() {
         buttonSave.setOnClickListener {
             shopItemViewModel.editShopItem(editTextName.text?.toString(), editTextCount.text?.toString())
         }
-    }
+    }*/
 
-    private fun setUpObserversViewModel() {
+    /*private fun setUpObserversViewModel() {
         shopItemViewModel.errorInputName.observe(this) {
             val message = if (it) {
                 getString(R.string.error_name_message)
@@ -101,7 +107,7 @@ class ShopItemActivity : AppCompatActivity() {
         shopItemViewModel.closeShopItemScreen.observe(this) {
             finish()
         }
-    }
+    }*/
 
     private fun parseIntent() {
         if (!intent.hasExtra(EXTRA_SCREEN_MODE)) {
@@ -120,7 +126,7 @@ class ShopItemActivity : AppCompatActivity() {
         }
     }
 
-    private fun initViews() {
+    /*private fun initViews() {
         textInputName = findViewById(R.id.textInputLayoutName)
         textInputCount = findViewById(R.id.textInputLayoutCount)
         editTextName = findViewById(R.id.editTextName)
