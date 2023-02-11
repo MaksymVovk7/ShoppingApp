@@ -1,6 +1,7 @@
 package com.example.shoppingapp.presentation
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     private lateinit var shopViewModel: MainShopViewModel
     private lateinit var shopItemsAdapter: ShopItemsAdapter
@@ -109,5 +110,10 @@ class MainActivity : AppCompatActivity() {
         shopItemsAdapter.onShopItemLongClickListener = {
             shopViewModel.changeStateShopItem(it)
         }
+    }
+
+    override fun onEditingFinished() {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+        supportFragmentManager.popBackStack()
     }
 }
